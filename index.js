@@ -15,8 +15,9 @@ export default {
     const url = new URL(request.url);
     const prompt = (url.searchParams.get("q") || "").slice(0, 500);
 
+    // بدون q: قدّم صفحة الدردشة
     if (!prompt) {
-      return new Response("أرسل سؤالك هكذا: ?q=مرحبا", { status: 400, headers: CORS });
+      return env.ASSETS.fetch(request);
     }
 
     try {
