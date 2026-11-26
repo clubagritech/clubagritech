@@ -1,4 +1,4 @@
-export async function askOpenRouter(env, prompt) {
+export async function askOpenRouter(env, prompt, system) {
   const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -7,7 +7,10 @@ export async function askOpenRouter(env, prompt) {
     },
     body: JSON.stringify({
       model: "openrouter/auto",
-      messages: [{ role: "user", content: prompt }],
+      messages: [
+        { role: "system", content: system },
+        { role: "user", content: prompt },
+      ],
     }),
   });
 
