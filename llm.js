@@ -1,9 +1,22 @@
 import { askGroq } from "./providers/groq.js";
+import { askOpenRouter } from "./providers/openrouter.js";
 
-// لتغيير المزود لاحقاً غيّر هذه القيمة فقط
-const PROVIDER = "groq";
+// ترتيب المزودين: الأول هو الأساسي، والباقي احتياطي
+const PROVIDERS = [
+  { name: "groq", ask: askGroq },
+  { name: "openrouter", ask: askOpenRouter },
+];
 
 export async function askLLM(env, prompt) {
-  if (PROVIDER === "groq") return askGroq(env, prompt);
-  throw new Error("مزود غير معروف: " + PROVIDER);
+  const errors = [];
+
+  for (const provider of PROVIDERS) {
+    try {
+      return await provider.ask(env, prompt);
+    } catch (err) {
+      errors.push(`${provider.name}: ${err.message}`);
+    }
+  }
+
+  throw new Error("كل المزودين فشلوا => " + errors.join(" | "));
 }
