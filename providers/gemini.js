@@ -1,4 +1,4 @@
-export async function askGemini(env, prompt) {
+export async function askGemini(env, prompt, system) {
   const res = await fetch(
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
     {
@@ -8,6 +8,7 @@ export async function askGemini(env, prompt) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        systemInstruction: { parts: [{ text: system }] },
         contents: [{ parts: [{ text: prompt }] }],
       }),
     }
