@@ -6,8 +6,9 @@ export async function askGroq(env, prompt) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "llama-3.1-8b-instant",
+      model: "openai/gpt-oss-120b",
       messages: [{ role: "user", content: prompt }],
+      max_completion_tokens: 2048,
     }),
   });
 
