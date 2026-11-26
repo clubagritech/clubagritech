@@ -1,4 +1,4 @@
-export async function askGroq(env, prompt) {
+export async function askGroq(env, prompt, system) {
   const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -7,7 +7,10 @@ export async function askGroq(env, prompt) {
     },
     body: JSON.stringify({
       model: "openai/gpt-oss-120b",
-      messages: [{ role: "user", content: prompt }],
+      messages: [
+        { role: "system", content: system },
+        { role: "user", content: prompt },
+      ],
       max_completion_tokens: 2048,
     }),
   });
