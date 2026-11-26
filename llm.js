@@ -1,9 +1,11 @@
 import { askGroq } from "./providers/groq.js";
+import { askGemini } from "./providers/gemini.js";
 import { askOpenRouter } from "./providers/openrouter.js";
 
 // ترتيب المزودين: الأول هو الأساسي، والباقي احتياطي
 const PROVIDERS = [
   { name: "groq", ask: askGroq },
+  { name: "gemini", ask: askGemini },
   { name: "openrouter", ask: askOpenRouter },
 ];
 
