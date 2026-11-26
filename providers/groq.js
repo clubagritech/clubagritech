@@ -11,7 +11,11 @@ export async function askGroq(env, prompt) {
     }),
   });
 
-  if (!res.ok) throw new Error(`Groq error: ${res.status}`);
+  if (!res.ok) {
+    const detail = await res.text();
+    throw new Error(`Groq ${res.status}: ${detail}`);
+  }
+
   const data = await res.json();
   return data.choices[0].message.content;
 }
